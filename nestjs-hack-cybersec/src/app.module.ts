@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CsReportsModule } from './cs-reports/cs-reports.module';
+import { CsReportsModule } from './cs-reports/csreports.module';
 
 @Module({
   imports: [CsReportsModule],
