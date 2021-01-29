@@ -8,32 +8,32 @@ import { GetReportsFilterDto } from './dto/get-report-filter.dto';
 export class ReportRepository extends Repository<Report> {
   async getReports(filterDto: GetReportsFilterDto): Promise<Report[]> {
     const { status, search } = filterDto;
-    const query = this.createQueryBuilder('csreport');
+    const query = this.createQueryBuilder('report');
 
     if (status) {
-      query.andWhere('csreport.status = :status', { status });
+      query.andWhere('report.status = :status', { status });
     }
 
     if (search) {
       query.andWhere(
-        '(csreport.title LIKE :search OR csreport.description LIKE :search)',
+        '(report.title LIKE :search OR report.description LIKE :search)',
         { search: `%${search}%` },
       );
     }
 
-    const csreports = await query.getMany();
-    return csreports;
+    const reports = await query.getMany();
+    return reports;
   }
 
   async createReport(createReportDto: CreateReportDto): Promise<Report> {
     const { title, description } = createReportDto;
 
-    const csreport = new Report();
-    csreport.title = title;
-    csreport.description = description;
-    csreport.status = ReportStatus.PENDING;
-    await csreport.save();
+    const report = new Report();
+    report.title = title;
+    report.description = description;
+    report.status = ReportStatus.PENDING;
+    await report.save();
 
-    return csreport;
+    return report;
   }
 }

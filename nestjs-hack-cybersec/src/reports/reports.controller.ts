@@ -19,7 +19,7 @@ import { ReportStatusValidationPipe } from './pipes/report-status-validation.pip
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Report } from './report-entity';
 
-@Controller('csreports')
+@Controller('reports')
 export class ReportsController {
   constructor(private reportsService: ReportsService) {}
 
