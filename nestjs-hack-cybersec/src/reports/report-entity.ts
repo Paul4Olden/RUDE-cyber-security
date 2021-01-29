@@ -1,8 +1,8 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { CsReportStatus } from './csreports-status.enum';
+import { ReportStatus } from './reports-status.enum';
 
 @Entity()
-export class CsReport extends BaseEntity {
+export class Report extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,5 +13,5 @@ export class CsReport extends BaseEntity {
   description: string;
 
   @Column()
-  status: CsReportStatus;
+  status: ReportStatus;
 }

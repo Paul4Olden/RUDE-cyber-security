@@ -1,11 +1,11 @@
 import { BadRequestException, PipeTransform } from '@nestjs/common';
-import { CsReportStatus } from '../csreports-status.enum';
+import { ReportStatus } from '../reports-status.enum';
 
-export class CsReportStatusValidationPipe implements PipeTransform {
+export class ReportStatusValidationPipe implements PipeTransform {
   readonly allowedStatuses = [
-    CsReportStatus.PENDING,
-    CsReportStatus.APPROVED,
-    CsReportStatus.REJECTED,
+    ReportStatus.PENDING,
+    ReportStatus.APPROVED,
+    ReportStatus.REJECTED,
   ];
 
   transform(value: any /*, metadata: ArgumentMetadata*/) {
