@@ -18,3 +18,32 @@ export interface Ioc {
   vendors: Vendor[];
   class: string;
 }
+
+interface indicatorItem {
+  indicatorItemID: string;
+  condition: string;
+  document: string;
+  search: string;
+  type: string;
+  content: string;
+}
+
+export interface Indicator {
+  indicatorId: string;
+  indicatorItems: indicatorItem[];
+  operator: string;
+}
+
+export interface Ioc2 {
+  indicator: Indicator[];
+  threatcategory: string;
+  threatgroup: string;
+  category: string;
+  family: string;
+  license: string;
+  reputation: Reputation;
+  authorName: string;
+  date: Date;
+  description: string;
+  class: string;
+}
