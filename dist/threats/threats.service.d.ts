@@ -73,5 +73,7 @@ export declare class ThreatsService {
     private extractElementsFromString;
     private threatFieldExtractor;
     private iocFieldExtractor;
+    private malwareExtractor;
+    private parseIoc;
     parse(inputString: string, fileName: string): Threat;
 }

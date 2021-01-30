@@ -1,1 +1,1 @@
-export declare const keywords: any[];
+export declare const keywords: string[];
