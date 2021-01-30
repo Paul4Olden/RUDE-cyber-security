@@ -11,31 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var ThreatsController_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ThreatsController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
 const threats_service_1 = require("./threats.service");
-let ThreatsController = ThreatsController_1 = class ThreatsController {
+let ThreatsController = class ThreatsController {
     constructor(threatsService) {
         this.threatsService = threatsService;
-        this.logger = new common_1.Logger(ThreatsController_1.name);
     }
     async uploadFile(file) {
-        this.threatsService.parse(file.toString(), file.name);
+        console.log(file.buffer.toString());
     }
 };
 __decorate([
-    common_1.Post('upload'),
+    common_1.Post('/upload'),
     common_1.UseInterceptors(platform_express_1.FileInterceptor('file')),
     __param(0, common_1.UploadedFile()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ThreatsController.prototype, "uploadFile", null);
-ThreatsController = ThreatsController_1 = __decorate([
-    common_1.Controller('threats'),
+ThreatsController = __decorate([
+    common_1.Controller('/threats'),
     __metadata("design:paramtypes", [threats_service_1.ThreatsService])
 ], ThreatsController);
 exports.ThreatsController = ThreatsController;
