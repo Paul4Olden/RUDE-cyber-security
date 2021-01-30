@@ -5,7 +5,7 @@ export interface IocField {
 }
 
 export interface Malware {
-  parametr: string; // Имя (чаще всего будет как и название файла)
+  parameter: string; // Имя (чаще всего будет как и название файла)
   path: string; // Путь к файлу
   fileName: string; // Имя фалйа
   fileExtenssion: string; // Расширение файла
@@ -14,7 +14,7 @@ export interface Malware {
 }
 
 export interface ThreatFiled {
-  parametr: string; //Это всегда строка, будь то айпи, урл или что-то еще
+  parameter: string; //Это всегда строка, будь то айпи, урл или что-то еще
   info: string; //Это стринг в котором будет параграф из дока в котором нашлось это название
 }
 

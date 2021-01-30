@@ -3,7 +3,7 @@ import * as arrayUnique from 'array-unique';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as memoize from 'memoizee';
-import { IocField, Threat, ThreatFiled } from './threats.interface';
+import { IocField, Malware, Threat, ThreatFiled } from './threats.interface';
 import { threatGroup } from './threatGroupID';
 import { industries } from './industries';
 import { keywords } from './keywords';
@@ -382,12 +382,14 @@ export class ThreatsService {
     return this.matchesWithRegExp(s, regexp);
   }
 
-  public extractCWE() {
-    
+  public extractCWE(s: string): string[] {
+    const regexp = /(CVE-(19|20)\d{2}-\d{4,7})/gi;
+    return this.matchesWithRegExp(s, regexp);
   }
 
-  public extractRegistry() {
-
+  public extractRegistry(s: string): string[] {
+    const regexp = /(HKEY_LOCAL_MACHINE\\|HKLM\\)([a-zA-Z0-9\s_@\-\^!#.\:\/\$%&+={}\[\]\\*])+(?<!\S)/igm;
+    return this.matchesWithRegExp(s, regexp);
   }
 
   private extractElementsFromString(arr: string[], input: string) {
@@ -406,33 +408,59 @@ export class ThreatsService {
     let extract = additional !== undefined ? callback(additional, input) : callback(input);
     if (extract !== []) 
       threatField.push({
-        parametr: extract.join(' '),
+        parameter: extract.join(' '),
         info: input
       });
   }
 
   private iocFieldExtractor(
-    calback: Function,
+    callback: Function,
     iocField: IocField[],
     input: string,
-    paragraph: string
+    paragraph: string,
+    danger: boolean
   ): void {
-    let extract = calback(input);
+    let extract = callback(input);
     if (extract !== []) 
       iocField.push({
         parameter: extract.join(' '),
         info: paragraph,
-        dangerous: true,
+        dangerous: danger,
       });
   }
 
-  private malwareExtractor() {
-
-  }
-
   //find all matches for regexps or keywords in the file
-  public parse(inputString: string): Threat {
-    const threat: Threat;
+  public parse(inputString: string, fileName: string): Threat {
+    const threat: Threat = {
+      threadUID: '',
+      name: fileName.replace('_', ' '),
+      cve: [],
+      cwe: [],
+      software: [],
+      malware: [],
+      threatActor: [],
+      industry: [],
+      mitreAattack: [],
+      county: [],
+      city: [],
+      timeStamp: [],
+      ioc: {
+        ipv4: [],
+        ipv6: [],
+        domain: [],
+        email: [],
+        md5: [],
+        registryKey: [],
+        sha1: [],
+        sha256: [],
+        sha512: [],
+        ssdeep: [],
+        url: []
+      },
+      document: '',
+      rating: '',
+      comment: ''
+    };
 
     threat.document = this.formatString(inputString);
     this.splitToParagraphs(threat.document).map((paragraph: string) => {
@@ -440,44 +468,43 @@ export class ThreatsService {
       this.threatFieldExtractor(this.extractElementsFromString, threat.industry, paragraph, industries);
       this.threatFieldExtractor(this.extractCVE, threat.cve, paragraph);
       this.threatFieldExtractor(this.extractCWE, threat.cwe, paragraph);
+
       
       let keywordConnections = this.extractElementsFromString(keywords, paragraph);
       if (keywordConnections !== []) {
         this.splitToSentencies(paragraph).map((sentence: string) => {
-          this.iocFieldExtractor(this.extractURL, threat.ioc.url, sentence, paragraph);
-          this.iocFieldExtractor(this.extractDomain, threat.ioc.domain, sentence, paragraph);
-          this.iocFieldExtractor(this.extractIPv4, threat.ioc.ipv4, sentence, paragraph);
-          this.iocFieldExtractor(this.extractIPv6, threat.ioc.ipv6, sentence, paragraph);
-          this.iocFieldExtractor(this.extractEmail, threat.ioc.email, sentence, paragraph);
-          this.iocFieldExtractor(this.extractRegistry, threat.ioc.registryKey, sentence, paragraph);
-          this.iocFieldExtractor(this.extractMD5, threat.ioc.md5, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA1, threat.ioc.sha1, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA256, threat.ioc.sha256, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA512, threat.ioc.sha512, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSSDEEP, threat.ioc.ssdeep, sentence, paragraph);
+          this.iocFieldExtractor(this.extractURL, threat.ioc.url, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractDomain, threat.ioc.domain, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractIPv4, threat.ioc.ipv4, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractIPv6, threat.ioc.ipv6, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractEmail, threat.ioc.email, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractRegistry, threat.ioc.registryKey, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractMD5, threat.ioc.md5, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractSHA1, threat.ioc.sha1, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractSHA256, threat.ioc.sha256, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractSHA512, threat.ioc.sha512, sentence, paragraph, true);
+          this.iocFieldExtractor(this.extractSSDEEP, threat.ioc.ssdeep, sentence, paragraph, true);
           this.threatFieldExtractor(this.extractDate, threat.timeStamp, paragraph);
         });
       }  
       else {
         this.splitToSentencies(paragraph).map((sentence: string) => {
-          this.iocFieldExtractor(this.extractURL, threat.ioc.url, sentence, paragraph);
-          this.iocFieldExtractor(this.extractDomain, threat.ioc.domain, sentence, paragraph);
-          this.iocFieldExtractor(this.extractIPv4, threat.ioc.ipv4, sentence, paragraph);
-          this.iocFieldExtractor(this.extractIPv6, threat.ioc.ipv6, sentence, paragraph);
-          this.iocFieldExtractor(this.extractEmail, threat.ioc.email, sentence, paragraph);
-          this.iocFieldExtractor(this.extractRegistry, threat.ioc.registryKey, sentence, paragraph);
-          this.iocFieldExtractor(this.extractMD5, threat.ioc.md5, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA1, threat.ioc.sha1, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA256, threat.ioc.sha256, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSHA512, threat.ioc.sha512, sentence, paragraph);
-          this.iocFieldExtractor(this.extractSSDEEP, threat.ioc.ssdeep, sentence, paragraph);
+          this.iocFieldExtractor(this.extractURL, threat.ioc.url, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractDomain, threat.ioc.domain, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractIPv4, threat.ioc.ipv4, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractIPv6, threat.ioc.ipv6, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractEmail, threat.ioc.email, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractRegistry, threat.ioc.registryKey, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractMD5, threat.ioc.md5, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractSHA1, threat.ioc.sha1, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractSHA256, threat.ioc.sha256, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractSHA512, threat.ioc.sha512, sentence, paragraph, false);
+          this.iocFieldExtractor(this.extractSSDEEP, threat.ioc.ssdeep, sentence, paragraph, false);
           this.threatFieldExtractor(this.extractDate, threat.timeStamp, paragraph);
         });
       }
     });
     
-    
-
     return threat;
   }
 }
