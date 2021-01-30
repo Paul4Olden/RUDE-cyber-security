@@ -36,7 +36,7 @@ export interface Threat {
   threadUID: string;
   name: string; //Прост строка парсится из названия или первой строки файла
   cve: ThreatFiled[]; // Всей найденные све (чаще всего будет только 1)
-  cwe: ThreatFiled[]; // Все найденые све 
+  cwe: ThreatFiled[]; // Все найденые све
   software: Malware[]; // Все зараженные софты (не факт что сможем отличать вредоносов от софтвейр)
   malware: Malware[]; // Все вредоносы и инфа по ним
   threatActor: ThreatFiled[]; // Киберпреступные групировки и ссылки на параграфы где их имена встречались
@@ -46,7 +46,7 @@ export interface Threat {
   city: ThreatFiled[]; // Города (опционально)
   timeStamp: ThreatFiled[]; // Тут сложнее, но как минимум будет список дат и параграфы где они указаны
   ioc: Ioc; // Иоки которые найденны в документе
-  document: string;// вернет отформатированный тхт документ, не уверен надо ли это
+  document: string; // вернет отформатированный тхт документ, не уверен надо ли это
   rating: string; // от 0 до 10
   comment: string;
 }

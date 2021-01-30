@@ -1,5 +1,7 @@
 import { Threat } from './threats.interface';
-export declare class ThreatsService {
+export declare class ThreatLogic {
+    private threats;
+    getAllThreats(): Threat[];
     private splitToParagraphs;
     private splitToSentencies;
     private formatString;

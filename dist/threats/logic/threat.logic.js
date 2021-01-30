@@ -1,6 +1,12 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ThreatsService = void 0;
+exports.ThreatLogic = void 0;
 const arrayUnique = require("array-unique");
 const fs = require("fs");
 const path = require("path");
@@ -8,8 +14,10 @@ const memoize = require("memoizee");
 const threatGroupID_1 = require("./threatGroupID");
 const industries_1 = require("./industries");
 const keywords_1 = require("./keywords");
-class ThreatsService {
+const common_1 = require("@nestjs/common");
+let ThreatLogic = class ThreatLogic {
     constructor() {
+        this.threats = [];
         this.getInternationalizedDomainRegExpString = memoize(this._getInternationalizedDomainRegExpString);
         this.getDomainRegExpString = memoize(this._getDomainRegExpString);
         this.getIPv6RegExpString = memoize(this._getIPv6RegExpString);
@@ -17,6 +25,9 @@ class ThreatsService {
         this.auth = '(?:\\S+(?::\\S*)?@)?';
         this.path = '(?:[/?#][^\\s"]*)?';
         this.port = '(?::\\d{2,5})?';
+    }
+    getAllThreats() {
+        return this.threats;
     }
     splitToParagraphs(input) {
         return input.split(/((?<!:))\n\n/g);
@@ -41,7 +52,6 @@ class ThreatsService {
     getTLDRegExpString() {
         return this.getTLDs().join('|');
     }
-    ;
     sortByValue(array) {
         return array.sort();
     }
@@ -80,40 +90,32 @@ class ThreatsService {
         const tld = this.getTLDRegExpString();
         return `(([a-z0-9\\u00a1-\\uffff]{1,63}|xn--)((?!.{0,63}--)[a-z0-9\\u00a1-\\uffff-]{0,63}[a-z0-9\\u00a1-\\uffff])?\\.)+(${tld})\\b`;
     }
-    ;
     getInternationalizedDomainRegExp() {
         const internationalizedDomain = this.getInternationalizedDomainRegExpString();
         return new RegExp(internationalizedDomain, 'gi');
     }
-    ;
     getNonStrictInternationalizedDomainRegExpString() {
         return '(([a-z0-9\\u00a1-\\uffff]{1,63}|xn--)((?!.{0,63}--)[a-z0-9\\u00a1-\\uffff-]{0,63}[a-z0-9\\u00a1-\\uffff])?\\.)+(?:[a-z0-9\\u00a1-\\uffff-]{2,63})\\b';
     }
-    ;
     getNonStrictInternationalizedDomainRegExp() {
         const nonStrictInternationalizedDomain = this.getNonStrictInternationalizedDomainRegExpString();
         return new RegExp(nonStrictInternationalizedDomain, 'gi');
     }
-    ;
     _getDomainRegExpString() {
         const tld = this.getTLDRegExpString();
         return `(([a-z0-9]{1,63}|xn--)((?!.{0,63}--)[a-z0-9-]{0,63}[a-z0-9])?\\.)+(${tld})\\b`;
     }
-    ;
     getDomainRegExp() {
         const domain = this.getDomainRegExpString();
         return new RegExp(domain, 'gi');
     }
-    ;
     getNonStrictDomainRegExpString() {
         return '(([a-z0-9]{1,63}|xn--)((?!.{0,63}--)[a-z0-9-]{0,63}[a-z0-9])?\\.)+(?:[a-z-]{2,})';
     }
-    ;
     getNonStrictDomainRegExp() {
         const nonStrictDomain = this.getNonStrictDomainRegExpString();
         return new RegExp(nonStrictDomain, 'gi');
     }
-    ;
     extractDomain(s, enableIDN = true, strictTLD = true) {
         if (enableIDN && strictTLD) {
             const internationalizedDomainRegExp = this.getInternationalizedDomainRegExpString();
@@ -134,22 +136,18 @@ class ThreatsService {
         const domain = this.getDomainRegExpString();
         return new RegExp(`[A-Za-z0-9_.]+@${domain}`, 'gi');
     }
-    ;
     getNonStrictEmailRegExp() {
         const nonStrictDomain = this.getNonStrictDomainRegExpString();
         return new RegExp(`[A-Za-z0-9_.]+@${nonStrictDomain}`, 'gi');
     }
-    ;
     getInternationalizedEmailRegExp() {
         const internationalizedDomain = this.getInternationalizedDomainRegExpString();
         return new RegExp(`[A-Za-z0-9_.]+@${internationalizedDomain}`, 'gi');
     }
-    ;
     getNonStrictInternationalizedEmailRegExp() {
         const nonStrictInternationalizedDomain = this.getNonStrictInternationalizedDomainRegExpString();
         return new RegExp(`[A-Za-z0-9_.]+@${nonStrictInternationalizedDomain}`, 'gi');
     }
-    ;
     extractEmail(s, enableIDN = true, strictTLD = true) {
         if (enableIDN && strictTLD) {
             const internationalizedEmailRegExp = this.getInternationalizedEmailRegExp();
@@ -169,12 +167,10 @@ class ThreatsService {
     getIPv4RegExpString() {
         return '(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\[?\\.]?){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
     }
-    ;
     getIPv4RegExp() {
         const ipv4 = this.getIPv4RegExpString();
         return new RegExp(ipv4, 'gi');
     }
-    ;
     extractIPv4(s) {
         const regexp = this.getIPv4RegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -199,12 +195,10 @@ class ThreatsService {
             .trim();
         return ipv6;
     }
-    ;
     getIPv6RegExp() {
         const ipv6 = this.getIPv6RegExpString();
         return new RegExp(ipv6, 'gi');
     }
-    ;
     extractIPv6(s) {
         const regexp = this.getIPv6RegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -215,28 +209,24 @@ class ThreatsService {
         const url = `(?:${this.protocol})${this.auth}(?:${domain}|localhost|${ipv4})${this.port}${path}`;
         return new RegExp(url, 'gi');
     }
-    ;
     getNonStrictURLRegExp() {
         const nonStrictDomain = this.getNonStrictDomainRegExpString();
         const ipv4 = this.getIPv4RegExpString();
         const nonStrictURL = `(?:${this.protocol})${this.auth}(?:${nonStrictDomain}|localhost|${ipv4})${this.port}${path}`;
         return new RegExp(nonStrictURL, 'gi');
     }
-    ;
     getInternationalizedURLRegExp() {
         const internationalizedDomain = this.getInternationalizedDomainRegExpString();
         const ipv4 = this.getIPv4RegExpString();
         const internationalizedURL = `(?:${this.protocol})${this.auth}(?:${internationalizedDomain}|localhost|${ipv4})${this.port}${path}`;
         return new RegExp(internationalizedURL, 'gi');
     }
-    ;
     getNonStrictInternationalizedURLRegExp() {
         const nonStrictInternationalizedDomain = this.getNonStrictInternationalizedDomainRegExpString();
         const ipv4 = this.getIPv4RegExpString();
         const nonStrictInternationalizedURL = `(?:${this.protocol})${this.auth}(?:${nonStrictInternationalizedDomain}|localhost|${ipv4})${this.port}${path}`;
         return new RegExp(nonStrictInternationalizedURL, 'gi');
     }
-    ;
     extractURL(s, enableIDN = true, strictTLD = true) {
         if (enableIDN && strictTLD) {
             const internationalizedURLRegExp = this.getInternationalizedURLRegExp();
@@ -256,7 +246,6 @@ class ThreatsService {
     getCVERegExp() {
         return;
     }
-    ;
     extractCVE(s) {
         const regexp = /(CVE-(19|20)\d{2}-\d{4,7})/gi;
         return this.matchesWithRegExp(s, regexp);
@@ -264,7 +253,6 @@ class ThreatsService {
     getBTCRegExp() {
         return /\b[13][a-km-zA-HJ-NP-Z0-9]{26,33}\b/gi;
     }
-    ;
     extractBTC(s) {
         const regexp = this.getBTCRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -272,7 +260,6 @@ class ThreatsService {
     getXMRRegExp() {
         return /\b4[0-9AB][1-9A-HJ-NP-Za-km-z]{93}\b/gi;
     }
-    ;
     extractXMR(s) {
         const regexp = this.getXMRRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -280,7 +267,6 @@ class ThreatsService {
     getGAPubIDRegExp() {
         return /pub-\d{16}/gi;
     }
-    ;
     extractGAPubID(s) {
         const regexp = this.getGAPubIDRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -288,7 +274,6 @@ class ThreatsService {
     getGATrackIDRegExp() {
         return /UA-\d{4,9}(-\d{1,2})?/gi;
     }
-    ;
     extractGATrackID(s) {
         const regexp = this.getGATrackIDRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -296,7 +281,6 @@ class ThreatsService {
     getMACAddressRegExp() {
         return /\b(?:[A-Fa-f0-9]{2}([-:]))(?:[A-Fa-f0-9]{2}\1){4}[A-Fa-f0-9]{2}\b/gi;
     }
-    ;
     extractMacAddress(s) {
         const regexp = this.getMACAddressRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -304,7 +288,6 @@ class ThreatsService {
     getETHRegExp() {
         return /\b0x[a-fA-F0-9]{40}\b/gi;
     }
-    ;
     extractETH(s) {
         const regexp = this.getETHRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -312,7 +295,6 @@ class ThreatsService {
     getFilePathRegExp() {
         return /(?:[a-zA-Z]:|\\\\[a-z0-9_.$\●-]+\\[a-z0-9_.$\●-]+)\\.+?(?=\.[a-zA-Z]|).+?\s/g;
     }
-    ;
     extractFilePath(s) {
         const regexp = this.getFilePathRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -320,7 +302,6 @@ class ThreatsService {
     getDateRegExp() {
         return /[0123][0,1]?\d{1}[\/\.\\\-](([0-2]?\d{1})|([3][0,1]{1}))[\/\.\\\-](([1]{1}[9]{1}[9]{1}\d{1})|([2-9]{1}\d{3}))/g;
     }
-    ;
     extractDate(s) {
         const regexp = this.getDateRegExp();
         return this.matchesWithRegExp(s, regexp);
@@ -334,7 +315,7 @@ class ThreatsService {
         return this.matchesWithRegExp(s, regexp);
     }
     extractRegistry(s) {
-        const regexp = /(HKEY_LOCAL_MACHINE\\|HKLM\\)([a-zA-Z0-9\s_@\-\^!#.\:\/\$%&+={}\[\]\\*])+(?<!\S)/igm;
+        const regexp = /(HKEY_LOCAL_MACHINE\\|HKLM\\)([a-zA-Z0-9\s_@\-\^!#.\:\/\$%&+={}\[\]\\*])+(?<!\S)/gim;
         return this.matchesWithRegExp(s, regexp);
     }
     extractElementsFromString(arr, input) {
@@ -349,7 +330,7 @@ class ThreatsService {
         if (extract !== null)
             threatField.push({
                 parameter: extract.join(' '),
-                info: input
+                info: input,
             });
     }
     iocFieldExtractor(callback, iocField, input, paragraph, danger) {
@@ -386,11 +367,11 @@ class ThreatsService {
                 sha256: [],
                 sha512: [],
                 ssdeep: [],
-                url: []
+                url: [],
             },
             document: '',
             rating: '',
-            comment: ''
+            comment: '',
         };
         threat.document = this.formatString(inputString);
         this.splitToParagraphs(threat.document).map((paragraph) => {
@@ -433,8 +414,12 @@ class ThreatsService {
             }
         });
         console.log(JSON.stringify(threat));
+        this.threats.push(threat);
         return threat;
     }
-}
-exports.ThreatsService = ThreatsService;
+};
+ThreatLogic = __decorate([
+    common_1.Injectable()
+], ThreatLogic);
+exports.ThreatLogic = ThreatLogic;
 //# sourceMappingURL=threat.logic.js.map

@@ -1,4 +1,12 @@
-import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ThreatsService } from './threats.service';
 
@@ -7,11 +15,21 @@ import { ThreatsService } from './threats.service';
 export class ThreatsController {
   constructor(private threatsService: ThreatsService) {}
 
+  @Get()
+  getAllThreats() {
+    return this.threatsService.getAllThreats();
+  }
+
+  @Get('/:id')
+  getThreatById(@Param('id') id: string) {
+    return this.threatsService.getThreatById(id);
+  }
+
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file) {
+  uploadFile(@UploadedFile() file) {
     console.log(file.buffer.toString());
 
-    // this.threatsService.parse(file.buffer.toString(), file.originalname);
+    return this.threatsService.parse(file.buffer.toString(), file.originalname);
   }
 }

@@ -3182,7 +3182,7 @@
         "affectsGlobalScope": false
       },
       "../src/reports/reports.service.ts": {
-        "version": "d41d6349de6af43a12b8dc9c9a249c90c77eb064afe8ef90e6d98cbdd4aac81c",
+        "version": "ab67f9da2e5ad825b11a41807a1623e51c26456f3561f7e41f76afc5147b39ef",
         "signature": "89c9f863e99410a4f406b5a2f991853b98b9fb616435079772c89ccfdc7d8a67",
         "affectsGlobalScope": false
       },
@@ -3521,14 +3521,39 @@
         "signature": "e3cd60be3c4f95c43420be67eaa21637585b7c1a8129f9b39983bbd294f9513c",
         "affectsGlobalScope": false
       },
+      "../src/threats/data/threats.interface.ts": {
+        "version": "b67a41db36ea94ca737fc079c573a01b3d1b32578986039b8ef3a3d294927d31",
+        "signature": "eb876e385759369d979b5e699ef7a15ffe72403c0d3bba590f9f4dc6ef6fad60",
+        "affectsGlobalScope": false
+      },
+      "../src/threats/data/threatGroupID.ts": {
+        "version": "49854dd37d508f88716e354221cb26a8be0dcb3931411fddd93d4cf651902a59",
+        "signature": "62b8b9908390a58e348c213bbeb7a965fa213d12c5d1e818515eaa2d9d7a67e7",
+        "affectsGlobalScope": false
+      },
+      "../src/threats/data/industries.ts": {
+        "version": "a0754ed9ef1377e7cf92a1a17d420595443dfd8c14f06c565a8a9512b03ac70f",
+        "signature": "98b207f3474cec2f1a5536b21f0d841724283f485843a526d693ea52e74e7eb0",
+        "affectsGlobalScope": false
+      },
+      "../src/threats/data/keywords.ts": {
+        "version": "79975b213e4b826826ce469847d9f91cad2d56a045d4cb7a04282ed3b6140d65",
+        "signature": "f78f342ba038fa8b177df3889036ee616be2ad04ef59045dd197de3e742cc544",
+        "affectsGlobalScope": false
+      },
+      "../node_modules/@types/uuid/index.d.ts": {
+        "version": "96b49a9de749afcf92b5bce1d8cc42cfae6816cdf5ea36584fd9256b8b2e5292",
+        "signature": "96b49a9de749afcf92b5bce1d8cc42cfae6816cdf5ea36584fd9256b8b2e5292",
+        "affectsGlobalScope": false
+      },
       "../src/threats/threats.service.ts": {
-        "version": "094bbf192523489cd43f6490b9f69f0622c62dd66c6afab019fdba17b6cf5d2d",
-        "signature": "f671022b1f20e19aec4095bbf96f8dcd12348a036ba2c312bc437dbd7a011921",
+        "version": "4c98046ef92ab7985474ef18b45b31c1339ca874b752401af18ddc741ac4ddd9",
+        "signature": "eae61436f955f9a0d79d73486c17045c55e8bfd77b683f45ab3b52cf9df1d48f",
         "affectsGlobalScope": false
       },
       "../src/threats/threats.controller.ts": {
-        "version": "3bd7e2fb92dca0b6fa9f90affbfe158f2a050414234fe1a340ff1516794370f7",
-        "signature": "aeb13b9378a1e5c7059c6e2013efdc3e538f3a7ec40c31d61e0cb91eb1a1c40c",
+        "version": "3fe3cd48e0c0fbc05a31024637a0de0c619bf62f6055f4aa64c2121470e921fd",
+        "signature": "be25267915843b936ca4fcb1038e6b9755752160d8ec95ca479bd8860acae25b",
         "affectsGlobalScope": false
       },
       "../src/threats/threats.module.ts": {
@@ -3724,31 +3749,6 @@
       "../src/config/typeorm.config.ts": {
         "version": "4ecdf1b2437e14f42ce1af6e4101b91a346aba52b81737a0e0008feb1398bea5",
         "signature": "e48d1e836452920a823efe3c1f15dbaa531cbb2c536b3d47ad06ed5201a8b847",
-        "affectsGlobalScope": false
-      },
-      "../src/threats/logic/industries.ts": {
-        "version": "a0754ed9ef1377e7cf92a1a17d420595443dfd8c14f06c565a8a9512b03ac70f",
-        "signature": "98b207f3474cec2f1a5536b21f0d841724283f485843a526d693ea52e74e7eb0",
-        "affectsGlobalScope": false
-      },
-      "../src/threats/logic/keywords.ts": {
-        "version": "79975b213e4b826826ce469847d9f91cad2d56a045d4cb7a04282ed3b6140d65",
-        "signature": "f78f342ba038fa8b177df3889036ee616be2ad04ef59045dd197de3e742cc544",
-        "affectsGlobalScope": false
-      },
-      "../src/threats/logic/threats.interface.ts": {
-        "version": "9c865b150e3175ae54f39ba6378ed1d2843c4f48e50c061904e665df01260873",
-        "signature": "eb876e385759369d979b5e699ef7a15ffe72403c0d3bba590f9f4dc6ef6fad60",
-        "affectsGlobalScope": false
-      },
-      "../src/threats/logic/threatGroupID.ts": {
-        "version": "49854dd37d508f88716e354221cb26a8be0dcb3931411fddd93d4cf651902a59",
-        "signature": "62b8b9908390a58e348c213bbeb7a965fa213d12c5d1e818515eaa2d9d7a67e7",
-        "affectsGlobalScope": false
-      },
-      "../src/threats/logic/threat.logic.ts": {
-        "version": "be1833e6a92383996777d14bbfd6c804a0f70ade92a5f93faf64340c3d962206",
-        "signature": "745e97e7c4a7aef95c34cd7a9134b1bfe49e3eb2d6c49f9c392829e5694c2e89",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/anymatch/index.d.ts": {
@@ -3969,11 +3969,6 @@
       "../node_modules/@types/uglify-js/index.d.ts": {
         "version": "0215efc2c3f40fd9ec91f19d277afc9efba41cee054fd0be4c92e75cb10cf2c0",
         "signature": "0215efc2c3f40fd9ec91f19d277afc9efba41cee054fd0be4c92e75cb10cf2c0",
-        "affectsGlobalScope": false
-      },
-      "../node_modules/@types/uuid/index.d.ts": {
-        "version": "96b49a9de749afcf92b5bce1d8cc42cfae6816cdf5ea36584fd9256b8b2e5292",
-        "signature": "96b49a9de749afcf92b5bce1d8cc42cfae6816cdf5ea36584fd9256b8b2e5292",
         "affectsGlobalScope": false
       },
       "../node_modules/anymatch/index.d.ts": {
@@ -7110,14 +7105,6 @@
         "../src/reports/report-repository.ts",
         "../src/reports/reports-status.enum.ts"
       ],
-      "../src/threats/logic/threat.logic.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/path.d.ts",
-        "../src/threats/logic/industries.ts",
-        "../src/threats/logic/keywords.ts",
-        "../src/threats/logic/threatGroupID.ts",
-        "../src/threats/logic/threats.interface.ts"
-      ],
       "../src/threats/threats.controller.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/platform-express/index.d.ts",
@@ -7129,7 +7116,14 @@
         "../src/threats/threats.service.ts"
       ],
       "../src/threats/threats.service.ts": [
-        "../node_modules/@nestjs/common/index.d.ts"
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/path.d.ts",
+        "../node_modules/@types/uuid/index.d.ts",
+        "../src/threats/data/industries.ts",
+        "../src/threats/data/keywords.ts",
+        "../src/threats/data/threatGroupID.ts",
+        "../src/threats/data/threats.interface.ts"
       ]
     },
     "exportedModulesMap": {
@@ -10130,11 +10124,12 @@
         "../src/reports/report-repository.ts",
         "../src/reports/reports-status.enum.ts"
       ],
-      "../src/threats/logic/threat.logic.ts": [
-        "../src/threats/logic/threats.interface.ts"
-      ],
       "../src/threats/threats.controller.ts": [
+        "../src/threats/data/threats.interface.ts",
         "../src/threats/threats.service.ts"
+      ],
+      "../src/threats/threats.service.ts": [
+        "../src/threats/data/threats.interface.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -10943,11 +10938,10 @@
       "../src/reports/reports.controller.ts",
       "../src/reports/reports.module.ts",
       "../src/reports/reports.service.ts",
-      "../src/threats/logic/industries.ts",
-      "../src/threats/logic/keywords.ts",
-      "../src/threats/logic/threat.logic.ts",
-      "../src/threats/logic/threatGroupID.ts",
-      "../src/threats/logic/threats.interface.ts",
+      "../src/threats/data/industries.ts",
+      "../src/threats/data/keywords.ts",
+      "../src/threats/data/threatGroupID.ts",
+      "../src/threats/data/threats.interface.ts",
       "../src/threats/threats.controller.ts",
       "../src/threats/threats.module.ts",
       "../src/threats/threats.service.ts"
