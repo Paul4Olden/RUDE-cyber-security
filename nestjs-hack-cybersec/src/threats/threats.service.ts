@@ -3,6 +3,7 @@ import * as arrayUnique from 'array-unique';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as memoize from 'memoizee';
+import { stringify } from 'querystring';
 
 @Injectable()
 export class ThreatsService {
@@ -371,6 +372,13 @@ export class ThreatsService {
   private extractDate(s: string): string[] {
     const regexp = this.getDateRegExp();
     return this.matchesWithRegExp(s, regexp);
+  }
+
+  private extractFromString(arr: string[], input: string) {
+    return arr.reduce((out: string[], el: string) => {
+      input.includes(el) ? out.push(el) : '';
+      return out;
+    }, []);
   }
 
   //find all matches for regexps or keywords in the file
