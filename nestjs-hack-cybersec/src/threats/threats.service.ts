@@ -374,7 +374,12 @@ export class ThreatsService {
     return this.matchesWithRegExp(s, regexp);
   }
 
-  private extractFromString(arr: string[], input: string) {
+  public extractFileWithExtension(s: string): string[] {
+    const regexp = /[^\s\/\\]+\.(?:(?:[dD][oO][cC][xX]?)|(?:[pP][dD][fF])|(?:[eE][xX][eE])|(?:[dD][lL][lL])|(?:[pP][dD][bB])|(?:[sS][cC][rR])|(?:[vV][bB][sS])|(?:[rR][tT][fF])|(?:[xX][lL][sS])|(?:[jJ][pP][gG])|(?:[zZ][iI][pP]))/g;
+    return this.matchesWithRegExp(s, regexp);
+  }
+
+  private extractElementsFromString(arr: string[], input: string) {
     return arr.reduce((out: string[], el: string) => {
       input.includes(el) ? out.push(el) : '';
       return out;
