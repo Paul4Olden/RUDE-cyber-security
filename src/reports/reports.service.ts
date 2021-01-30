@@ -10,7 +10,7 @@ import { GetReportsFilterDto } from './dto/get-report-filter.dto';
 export class ReportsService {
   constructor(
     @InjectRepository(ReportRepository)
-    private reportRepository: ReportRepository,
+    private reportRepository: ReportRepository
   ) {}
 
   async getReports(filterDto: GetReportsFilterDto): Promise<Report[]> {

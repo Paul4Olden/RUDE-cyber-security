@@ -20,17 +20,37 @@ let ThreatsController = class ThreatsController {
     constructor(threatsService) {
         this.threatsService = threatsService;
     }
-    async uploadFile(file) {
+    getAllThreats() {
+        return this.threatsService.getAllThreats();
+    }
+    getThreatById(id) {
+        return this.threatsService.getThreatById(id);
+    }
+    uploadFile(file) {
         console.log(file.buffer.toString());
+        return this.threatsService.parse(file.buffer.toString(), file.originalname);
     }
 };
+__decorate([
+    common_1.Get(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ThreatsController.prototype, "getAllThreats", null);
+__decorate([
+    common_1.Get('/:id'),
+    __param(0, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ThreatsController.prototype, "getThreatById", null);
 __decorate([
     common_1.Post('/upload'),
     common_1.UseInterceptors(platform_express_1.FileInterceptor('file')),
     __param(0, common_1.UploadedFile()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ThreatsController.prototype, "uploadFile", null);
 ThreatsController = __decorate([
     common_1.Controller('/threats'),
