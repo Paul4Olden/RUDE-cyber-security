@@ -6,14 +6,16 @@ import * as memoize from 'memoizee';
 
 @Injectable()
 export class ThreatsService {
-  inputString: string;
-
-  constructor(input: string) {
-    this.inputString = input;
+  private splitToParagraphs(input: string): string[] {
+    return input.split(/((?<!:))\n\n/g);
   }
 
-  private splitToLines(input: string): string[] {
-    return input.split('\n');
+  private splitToSentencies(input: string): string[] {
+    return input.split(/?:[.!?]['"]?\s{1,2}(?=[A-Z])/g);
+  }
+
+  private formatString(input): string {
+    return input.replace(/[\n]{3,}/g, '');
   }
 
   private getTLDs(): string[] {
@@ -362,10 +364,19 @@ export class ThreatsService {
     return this.matchesWithRegExp(s, regexp);
   }
 
+  private getDateRegExp = (): RegExp => {
+    return /[0123][0,1]?\d{1}[\/\.\\\-](([0-2]?\d{1})|([3][0,1]{1}))[\/\.\\\-](([1]{1}[9]{1}[9]{1}\d{1})|([2-9]{1}\d{3}))/g;
+  };
+
+  private extractDate(s: string): string[] {
+    const regexp = this.getDateRegExp();
+    return this.matchesWithRegExp(s, regexp);
+  }
+
   //find all matches for regexps or keywords in the file
-  public parse(): string[] {
+  public parse(inputString: string): string[] {
     const out = [];
-    this.splitToLines(this.inputString).forEach((element) => {
+    this.splitToSentencies(inputString).forEach((element) => {
       out.push(...this.extractASN(element));
       out.push(...this.extractBTC(element));
       out.push(...this.extractCVE(element));

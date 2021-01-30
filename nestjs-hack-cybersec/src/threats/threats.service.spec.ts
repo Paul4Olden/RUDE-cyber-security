@@ -8,5 +8,8 @@ const file = fs.readFileSync(
 );
 
 describe('ThreatsService', () => {
-  let threatsService = new ThreatsService(file);
+
+  beforeEach(async () => {
+    
+  });
 });
