@@ -6,6 +6,7 @@ import * as memoize from 'memoizee';
 import { IocField, Threat, ThreatFiled } from './threats.interface';
 import { threatGroup } from './threatGroupID';
 import { industries } from './industries';
+import { keywords } from './keywords';
 
 @Injectable()
 export class ThreatsService {
@@ -383,6 +384,10 @@ export class ThreatsService {
 
   public extractCWE() {
     
+  }
+
+  public extractRegistry() {
+
   }
 
   private extractElementsFromString(arr: string[], input: string) {
