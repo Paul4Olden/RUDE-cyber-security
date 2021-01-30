@@ -1,0 +1,35 @@
+.tag{
+    height: 24px;
+    display: block;
+    width: fit-content;
+    padding: 3px 7px 3px 5px;
+    border: 1px solid black;
+    border-radius: 15px;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    color: white;
+    margin-right: 8px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+    &_blue{
+        background: $tag-blue;
+    }
+    &_yellow{
+        background: $tag-yellow;
+    }
+    &_orange{
+        background: $tag-orange;
+    }
+    &_green{
+        background: $tag-green;
+    }
+    &_red{
+        background: $tag-red;
+    }
+    &_default{
+        background: $tag-default;
+    }
+}

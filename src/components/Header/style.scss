@@ -1,0 +1,18 @@
+.header {
+  position: fixed;
+  width: 100vw;
+  height: 60px;
+  display: flex;
+  background-color: $dark-gray;
+  align-items: center;
+}
+.brand {
+  font-size: 32px;
+  color: $white;
+  margin-left: 12px;
+  text-decoration: none;
+}
+.brand-app-name {
+  // color: $blue;
+color: $light-purple;
+}

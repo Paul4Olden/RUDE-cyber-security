@@ -1,0 +1,22 @@
+.threat-field {
+  :first-child {
+    margin-bottom: 10px;
+  }
+  :last-child {
+    margin-bottom: 0px;
+  }
+  &__parametr {
+    color: $white;
+    font-size: 16px;
+    &-label {
+      font-weight: 600;
+    }
+  }
+  &__info {
+    color: $info-gray;
+    &-label {
+      color: $info-gray;
+      font-weight: 600;
+    }
+  }
+}
