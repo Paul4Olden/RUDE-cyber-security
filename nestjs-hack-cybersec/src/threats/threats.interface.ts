@@ -33,6 +33,7 @@ export interface Ioc {
 }
 
 export interface Threat {
+  threadUID: string;
   name: string; //Прост строка парсится из названия или первой строки файла
   cve: ThreatFiled[]; // Всей найденные све (чаще всего будет только 1)
   cwe: ThreatFiled[]; // Все найденые све 
@@ -47,4 +48,5 @@ export interface Threat {
   ioc: Ioc; // Иоки которые найденны в документе
   document: string;// вернет отформатированный тхт документ, не уверен надо ли это
   rating: string; // от 0 до 10
+  comment: string;
 }
