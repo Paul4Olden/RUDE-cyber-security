@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 const config: AxiosRequestConfig = {
-  baseURL: 'http://91.248.75.251:3001',
+  baseURL: 'http://90.153.37.24:3001',
   timeout: 10000,
 }
 
