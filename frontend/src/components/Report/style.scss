@@ -1,0 +1,64 @@
+.report {
+  max-width: 1280px;
+  width: 100%;
+  margin: 10px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  &__id {
+    margin-bottom: 24px;
+    font-size: 40px;
+    color: $white;
+    &-copy-btn {
+      color: $purple;
+      cursor: pointer;
+      &:hover {
+        color: $light-purple;
+      }
+      &:active {
+        color: $purple;
+      }
+    }
+  }
+}
+
+.reports__similar {
+  display: flex;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  &-label {
+    margin-bottom: 12px;
+    font-size: 24px;
+    color: $white;
+  }
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+.comment-field {
+  max-width: 800px;
+  width: 90%;
+  margin-bottom: 16px;
+}
+.report-submit-btn {
+  max-width: fit-content;
+}
+.report__result {
+  display: flex;
+  margin-bottom: 16px;
+  &-label {
+    font-size: 24px;
+    color: $white;
+    margin-bottom: 12px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .report__result {
+    flex-direction: column;
+  }
+}

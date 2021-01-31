@@ -1,0 +1,24 @@
+.checkbox-input {
+  display: none;
+  &__circle-icon {
+    color: $light-purple;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__label {
+    color: $white;
+    font-size: 24px;
+    display: flex;
+    height: 32px;
+    justify-content: start;
+    align-items: center;
+    margin-right: 24px;
+    margin-bottom: 24px;
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}

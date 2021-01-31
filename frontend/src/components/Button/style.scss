@@ -1,0 +1,25 @@
+.button {
+  padding: 8px 16px 9px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  color: $white;
+  font-size: 20px;
+  &_purple {
+    background-color: #553098;
+    color: $white;
+    &:hover {
+      background-color:  #6e40c9;
+      color: $white;
+    }
+    &:active {
+      background-color: #553098;
+      color: $white;
+    }
+   
+  }
+  &:disabled {
+    color: $black;
+    background-color: $disabled-gray;
+  }
+}
